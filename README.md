@@ -1,13 +1,26 @@
 # Face Upscaling and Seamless Embedding (FUSE)
 
-FUSE is a collection of advanced face enhancement nodes for ComfyUI that provides seamless face upscaling and embedding capabilities using YOLO face detection and SAM (Segment Anything Model) for precise masking.
+FUSE is an All-in-One Face Fix KSampler for ComfyUI that provides seamless face upscaling and embedding capabilities using YOLO face detection and SAM (Segment Anything Model) for precise masking.
 
 ## Installation
 
+Navigate to your ComfyUI's custom nodes
 ```bash
 cd custom_nodes
-git clone https://github.com/WASasquatch/face-upscaling-and-seamless-embedding WAS-FUSE
-cd WAS-FUSE
+```
+
+Clone FUSE nodes.
+```bash
+git clone https://github.com/WASasquatch/face-upscaling-and-seamless-embedding
+```
+
+Navigate to the FUSE directory
+```bash
+cd face-upscaling-and-seamless-embedding
+```
+
+Install dependencies to your Python Environment used by ComfyUI
+```bash
 pip install -r requirements.txt
 ```
 
@@ -15,27 +28,40 @@ pip install -r requirements.txt
 
 ### FUSEKSampler
 
-Advanced face-aware sampling node that combines face detection, segmentation, and seamless blending.
+Advanced face-aware sampling node that combines YOLO face detection, SAM segmentation, and seamless blending. Features include:
+- Intelligent face detection and cropping with adjustable padding and size
+- Optional square crop enforcement for consistent face processing
+- Multiple blending modes (box/radial) with configurable strength
+- SAM-based precise face masking
+- Color preservation options using various transfer methods (LAB, PDF, mean-std)
+- Internal caching system for faster workflow iteration
+- Support for processing specific faces using face index
 
 | Parameter | Description | Type | Default |
 |-----------|-------------|------|---------|
 | model | Base model for sampling | MODEL | Required |
-| positive | Positive conditioning | CONDITIONING | Required |
-| negative | Negative conditioning | CONDITIONING | Required |
-| latent | Input latent for sampling | LATENT | Required |
-| vae | VAE model | VAE | Required |
-| seed | Seed for sampling | INT | Required |
-| steps | Number of steps | INT | 20 |
-| cfg | CFG Scale | FLOAT | 7.0 |
-| sampler_name | Name of the sampler | STRING | "euler" |
-| scheduler | Scheduler type | STRING | "normal" |
-| denoise | Denoising strength | FLOAT | 1.0 |
-| yolo_model_name | YOLO model for face detection | STRING | Required |
-| sam_model_name | SAM model name | STRING | Required |
-| sam_model_type | SAM model type | STRING | Required |
-| blend_amount | Strength of blending | FLOAT | 0.5 |
-| blend_mode | Blending method | STRING | "gaussian" |
-| use_sam_mask | Use SAM for masking | BOOL | True |
+| vae | VAE model for the sampler | VAE | Required |
+| images | Input image batch for face detection and upscaling | IMAGE | Required |
+| positive | Positive conditioning for the sampler | CONDITIONING | Required |
+| negative | Negative conditioning for the sampler | CONDITIONING | Required |
+| use_cache | Use internal caching to speed up workflow iteration | BOOLEAN | True |
+| seed | Seed for deterministic results | INT | 0 |
+| steps | Number of steps for the sampler | INT | 20 |
+| cfg | Classifier-Free Guidance scale | FLOAT | 8.0 |
+| sampler_name | Name of the sampler | STRING | (from KSampler) |
+| scheduler | Scheduler type | STRING | (from KSampler) |
+| denoise | Denoising strength (lower values adhere more to input face) | FLOAT | 0.5 |
+| yolo_detector | YOLO model for face detection | STRING | Required |
+| sam_segmenter | SAM model for face segmentation | STRING | Required |
+| sam_model_type | SAM model type (vit_b, vit_l, vit_h) | STRING | "vit_b" |
+| face_id | Index of the face to process (0 is first face) | INT | 0 |
+| face_size | Resolution to sample the face crop at | INT | 512 |
+| face_padding | Padding in pixels around face crop | INT | 20 |
+| force_square | Force 1:1 square face crops | BOOLEAN | True |
+| blend_amount | Amount of blending for face embedding | FLOAT | 0.3 |
+| blend_mode | Feathering mode for blending (box, radial) | STRING | "box" |
+| use_sam_mask | Use SAM face mask for blending | BOOLEAN | False |
+| face_color_transfer | Color transfer mode (none, lab, pdf, mean_std) | STRING | "none" |
 
 ### FUSESamplerMaskOptions
 
@@ -67,7 +93,7 @@ The following model directories are expected in your ComfyUI models folder:
 
 ## License
 
-MIT License - See LICENSE file for details.
+MIT License
 
 ## Credits
 
