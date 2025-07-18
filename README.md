@@ -107,13 +107,6 @@ You can find example workflows in the `workflows` [directory](/workflows).
 - ultralytics (YOLO)
 - segment-anything (SAM)
 
-## Models
-
-The following model directories are expected in your ComfyUI models folder:
-- `models/yolo-face/` - YOLO face detection models
-- `models/sams/` - SAM models
-- `models/upscale_models/` - Upscaling models
-
 ## License
 
 MIT License
