@@ -41,17 +41,12 @@ def compute_blend_hash(blend_amount, blend_mode, use_sam_mask, mask_fill_holes,
     params = f"{blend_amount}_{blend_mode}_{use_sam_mask}_{mask_fill_holes}_{mask_dilation}_{mask_erosion}_{mask_smoothing}"
     return hashlib.md5(params.encode()).hexdigest()
 
-def compute_model_hash(model):
-    try:
-        if hasattr(model, 'model'):
-            weights = getattr(model.model, 'state_dict', lambda: {})()
-        else:
-            weights = getattr(model, 'state_dict', lambda: {})()
-        # This can be slow; I wish we could get model path
-        w_bytes = b''.join([v.cpu().numpy().tobytes() for k, v in sorted(weights.items())]) if weights else str(id(model)).encode()
-        return hashlib.md5(w_bytes).hexdigest()
-    except Exception:
-        return str(id(model))
+def get_model_identity(model):
+    if hasattr(model, 'patches_uuid'):
+        return str(model.patches_uuid)
+    if hasattr(model, 'model') and hasattr(model.model, 'patches_uuid'):
+        return str(model.model.patches_uuid)
+    return str(id(model))
 
 def compute_conditioning_hash(cond):
     try:

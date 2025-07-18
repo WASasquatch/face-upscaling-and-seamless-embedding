@@ -9,7 +9,7 @@ from nodes import common_ksampler, MAX_RESOLUTION
 
 from .fuse_utils import (
     tensor2pil, pil2tensor, compute_tensor_hash, compute_diffusion_hash, compute_blend_hash,
-    compute_model_hash, compute_conditioning_hash, load_yolo_face_models_list, load_sam_models_list,
+    get_model_identity, compute_conditioning_hash, load_yolo_face_models_list, load_sam_models_list,
     build_feather_mask, contract_and_blur_mask, transfer_color, FUSEBase, 
 )
 
@@ -168,8 +168,8 @@ class FUSEKSampler(FUSEBase):
             crop_info = [crop_info[idx]]
 
             params_hash = compute_diffusion_hash(seed, steps, cfg, sampler_name, scheduler, denoise)
-            model_hash = compute_model_hash(model)
-            vae_hash = compute_model_hash(vae)
+            model_hash = get_model_identity(model)
+            vae_hash = get_model_identity(vae)
             pos_hash = compute_conditioning_hash(positive)
             neg_hash = compute_conditioning_hash(negative)
             diffusion_key = f"diffusion_{crops_hash}_{params_hash}_{model_hash}_{vae_hash}_{pos_hash}_{neg_hash}"

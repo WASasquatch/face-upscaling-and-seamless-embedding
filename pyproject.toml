@@ -1,0 +1,37 @@
+[project]
+name = "face-upscaling-and-seamless-embedding"
+version = "1.0.0"
+authors = [
+    { name="WASasquatch", email="jordanslost@gmail.com" },
+]
+description = "All-in-One Face Fix KSampler for ComfyUI with YOLO detection and SAM segmentation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT License" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: GPU :: NVIDIA CUDA"
+]
+dependencies = [
+    "torch",
+    "numpy",
+    "Pillow",
+    "scipy",
+    "ultralytics",
+    "segment-anything",
+    "comfyui-frontend-package>=1.0.0"
+]
+
+[project.urls]
+Repository = "https://github.com/WASasquatch/face-upscaling-and-seamless-embedding"
+# Documentation = "https://github.com/WASasquatch/face-upscaling-and-seamless-embedding/wiki"
+"Bug Tracker" = "https://github.com/WASasquatch/face-upscaling-and-seamless-embedding/issues"
+
+[tool.comfy]
+PublisherId = "was"
+DisplayName = "FUSE Face Enhancer"
+Icon = "https://raw.githubusercontent.com/WASasquatch/face-upscaling-and-seamless-embedding/main/icon.png"
+Banner = "https://raw.githubusercontent.com/WASasquatch/face-upscaling-and-seamless-embedding/main/banner.png"
+requires-comfyui = ">=1.0.0"
