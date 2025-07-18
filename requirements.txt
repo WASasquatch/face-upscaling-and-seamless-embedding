@@ -1,0 +1,7 @@
+torch
+numpy
+Pillow
+scipy
+ultralytics
+segment-anything
+python-color-transfer
