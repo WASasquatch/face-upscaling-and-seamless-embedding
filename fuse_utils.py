@@ -14,9 +14,22 @@ from nodes import VAEDecode, VAEEncode
 from folder_paths import models_dir
 
 nodes_dir = os.path.dirname(__file__)
-yolo_models_path = os.path.join(models_dir, "yolo-face")
+yolo_face_models_path = os.path.join(models_dir, "yolo-face")
+yolo_models_path = os.path.join(models_dir, "yolo")
 sam_models_path = os.path.join(models_dir, "sams")
 upscale_models_path = os.path.join(models_dir, "upscale_models")
+
+# PyTorch 2.6+ Pickle fix for YOLO/Ultralytics
+if hasattr(torch.serialization, "add_safe_globals"):
+    try:
+        from ultralytics.nn.tasks import DetectionModel
+        torch.serialization.add_safe_globals([DetectionModel])
+        print("[FUSE] Added ultralytics.nn.tasks.DetectionModel to torch.serialization.add_safe_globals")
+        print("[FUSE] Loading of pickle YOLO models enabled.")
+    except Exception:
+        print("[FUSE] Failed to add ultralytics.nn.tasks.DetectionModel to torch.serialization.add_safe_globals")
+        print("[FUSE] Pickle models will not be loaded with Ultralytics YOLO.")
+        pass
 
 def tensor2pil(img_tensor):
     arr = img_tensor.cpu().numpy()
@@ -71,6 +84,16 @@ def transfer_color(source_img, target_img, mode='lab'):
     return Image.fromarray(result[:, :, ::-1])
 
 def load_yolo_face_models_list():
+    if not os.path.isdir(yolo_face_models_path):
+        return []
+
+    return sorted([
+        fname for fname in os.listdir(yolo_face_models_path)
+        if (fname.lower().endswith(".pth") or fname.lower().endswith(".pt"))
+           and os.path.isfile(os.path.join(yolo_face_models_path, fname))
+    ])
+
+def load_yolo_models_list():
     if not os.path.isdir(yolo_models_path):
         return []
 
@@ -161,14 +184,15 @@ class FUSEBase:
         self.current_sam_model_name = None
         self.current_sam_model_type = None
 
-    def _load_yolo_model(self, model_name, device):
+    def _load_yolo_model(self, model_name, device, is_face_model=False):
         if self.yolo_model is None or self.current_yolo_model_name != model_name:
             if self.yolo_model is not None:
                 self._move_yolo_to_cpu()
                 del self.yolo_model
                 gc.collect()
 
-            weights = os.path.join(yolo_models_path, model_name)
+            model_path = yolo_face_models_path if is_face_model else yolo_models_path
+            weights = os.path.join(model_path, model_name)
             self.yolo_model = YOLO(weights)
             self.current_yolo_model_name = model_name
 
