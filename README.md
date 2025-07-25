@@ -1,8 +1,16 @@
+<div align="center">
+  <img src="banner.png" alt="FUSE Banner">
+</div>
+
 # Face Upscaling and Seamless Embedding (FUSE)
 
 FUSE is an All-in-One Face Fix KSampler for ComfyUI that provides seamless face upscaling and embedding capabilities using YOLO face detection and SAM (Segment Anything Model) for precise masking.
 
-**NOTE**: While FUSE is aimed at face restoration, it should be noted that it can accept any trained YOLO detection model, and as a result of your prompt, help isolate and fix other areas of images, such as... hands?
+## Before and After Examples
+
+- https://imgsli.com/Mzk5NzU1
+- https://imgsli.com/Mzk5NzUx
+- https://imgsli.com/Mzk5NzUz
 
 
 ## Installation
@@ -35,6 +43,13 @@ You'll need to download some YOLO Face models. You can find some from:
  - https://github.com/Fuyucch1/yolov8_animeface/releases/tag/v1 (Anime Face)
   
 Models should be placed in the `models/yolo-face/` directory.
+
+#### YOLO Models
+You'll need to download some YOLO models. You can find some from:
+ - https://github.com/akanametov/yolo-face
+ - https://github.com/Fuyucch1/yolov8_animeface/releases/tag/v1 (Anime Face)
+
+Models should be placed in the `models/yolo/` directory.
 
 #### SAM Models
 You'll also need to download some SAM models. You can find official models from:
@@ -70,9 +85,12 @@ Advanced face-aware sampling node that combines YOLO face detection, SAM segment
 | scheduler | Scheduler type | STRING | (from KSampler) | Available KSampler schedulers |
 | denoise | Denoising strength (lower values adhere more to input face) | FLOAT | 0.5 | 0.0 - 1.0 |
 | yolo_detector | YOLO model for face detection | STRING | Required | Available YOLO face models |
+| yolo_confidence | YOLO confidence threshold (higher values detect only more confident faces) | FLOAT | 0.25 | 0.0 - 1.0 |
+| yolo_nms_iou | YOLO NMS IoU threshold (lower values remove more overlapping detections) | FLOAT | 0.5 | 0.0 - 1.0 |
 | sam_segmenter | SAM model for face segmentation | STRING | Required | Available SAM models |
 | sam_model_type | SAM model type | STRING | "vit_b" | "vit_b", "vit_l", "vit_h" |
-| face_id | Index of the face to process (0 is first face) | INT | 0 | ≥ 0 |
+| face_id | Index of the face to process (0 is first face, -1 is all faces) | INT | 0 | ≥ -1 |
+| face_order | Order to process detected faces | STRING | "linear" | "linear", "linear_reverse", "largest_bbox", "smallest_bbox" |
 | face_size | Resolution to sample the face crop at | INT | 512 | 512, 768, 1024, 1280, 1536 |
 | face_padding | Padding in pixels around face crop | INT | 20 | 0 - `nodes.MAX_RESOLUTION` (Currently 16384) |
 | force_square | Force 1:1 square face crops | BOOLEAN | True | True/False |
@@ -91,15 +109,11 @@ Additional mask processing options for the FUSEKSampler.
 | mask_erosion | Amount to erode the mask | INT | 0 | 0 - `nodes.MAX_RESOLUTION` (Currently 16384) |
 | mask_smoothing | Smoothing factor for mask edges | FLOAT | 0.0 | 0.0 - 1024.0 |
 | mask_fill_holes | Fill holes in the mask | BOOL | True | True/False |
+| blend_sampling | Resampling method for resizing operations (face/mask crop and paste back) | STRING | "bilinear" | "bilinear", "lanczos", "nearest", "bicubic", "box", "hamming" |
 
 ### FUSEKSampler (Generic)
 
 A generic version of the FUSEKSampler designed for use with any YOLO detection model, not just face-specific ones. This node provides the same sampling capabilities as the original FUSEKSampler but with more generic parameter naming to avoid confusion when working with non-face detection models.
-
-**Key Differences from FUSEKSampler:**
-- Uses generic parameter names (e.g., "mask_id" instead of "face_id", "mask_size" instead of "face_size")
-- Designed to work with any YOLO model from the `models/yolo/` directory
-- Same functionality as the original node but with clearer naming for general object detection tasks
 
 **Use Cases:**
 - Hand detection and enhancement
@@ -121,9 +135,12 @@ A generic version of the FUSEKSampler designed for use with any YOLO detection m
 | scheduler | Scheduler type | STRING | (from KSampler) | Available KSampler schedulers |
 | denoise | Denoising strength (lower values adhere more to input mask) | FLOAT | 0.5 | 0.0 - 1.0 |
 | yolo_detector | YOLO model for mask detection | STRING | Required | Available YOLO models |
+| yolo_confidence | YOLO confidence threshold (higher values detect only more confident objects) | FLOAT | 0.25 | 0.0 - 1.0 |
+| yolo_nms_iou | YOLO NMS IoU threshold (lower values remove more overlapping detections) | FLOAT | 0.5 | 0.0 - 1.0 |
 | sam_segmenter | SAM model for mask segmentation | STRING | Required | Available SAM models |
 | sam_model_type | SAM model type | STRING | "vit_b" | "vit_b", "vit_l", "vit_h" |
-| mask_id | Index of the mask to process (0 is first mask found) | INT | 0 | ≥ 0 |
+| mask_id | Index of the mask to process (0 is first mask found, -1 is all masks) | INT | 0 | ≥ -1 |
+| mask_order | Order to process detected masks | STRING | "linear" | "linear", "linear_reverse", "largest_bbox", "smallest_bbox" |
 | mask_size | Resolution to sample the mask crop at | INT | 512 | 512, 768, 1024, 1280, 1536 |
 | mask_padding | Padding in pixels around mask crop | INT | 20 | 0 - `nodes.MAX_RESOLUTION` (Currently 16384) |
 | force_square | Force 1:1 square mask crops | BOOLEAN | True | True/False |

@@ -1,6 +1,6 @@
 [project]
 name = "face-upscaling-and-seamless-embedding"
-version = "1.0.0"
+version = "1.0.2"
 authors = [
     { name="WASasquatch", email="jordanslost@gmail.com" },
 ]
@@ -31,7 +31,7 @@ Repository = "https://github.com/WASasquatch/face-upscaling-and-seamless-embeddi
 
 [tool.comfy]
 PublisherId = "was"
-DisplayName = "FUSE Face Enhancer"
+DisplayName = "FUSE Face Enhancer & General Enhancer"
 Icon = "https://raw.githubusercontent.com/WASasquatch/face-upscaling-and-seamless-embedding/main/icon.png"
 Banner = "https://raw.githubusercontent.com/WASasquatch/face-upscaling-and-seamless-embedding/main/banner.png"
 requires-comfyui = ">=1.0.0"

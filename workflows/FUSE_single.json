@@ -1,8 +1,8 @@
 {
   "id": "3a84f803-db87-4f34-b488-55c89da82fc5",
   "revision": 0,
-  "last_node_id": 71,
-  "last_link_id": 233,
+  "last_node_id": 72,
+  "last_link_id": 234,
   "nodes": [
     {
       "id": 6,
@@ -16,7 +16,7 @@
         270
       ],
       "flags": {},
-      "order": 12,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -47,7 +47,7 @@
         46
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -91,7 +91,7 @@
         610.85986328125
       ],
       "flags": {},
-      "order": 14,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -158,7 +158,7 @@
         88
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
@@ -207,7 +207,7 @@
         88
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -327,7 +327,7 @@
         826
       ],
       "flags": {},
-      "order": 13,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -411,7 +411,7 @@
         88
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -497,7 +497,7 @@
         474.0000305175781
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -558,7 +558,7 @@
         610.85986328125
       ],
       "flags": {},
-      "order": 16,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -589,7 +589,7 @@
         610.85986328125
       ],
       "flags": {},
-      "order": 18,
+      "order": 19,
       "mode": 0,
       "inputs": [
         {
@@ -620,7 +620,7 @@
         26
       ],
       "flags": {},
-      "order": 17,
+      "order": 18,
       "mode": 0,
       "inputs": [
         {
@@ -646,128 +646,6 @@
       "widgets_values": []
     },
     {
-      "id": 52,
-      "type": "FUSESamplerMaskOptions",
-      "pos": [
-        2914.85107421875,
-        835.3897094726562
-      ],
-      "size": [
-        270,
-        130
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "mask_optionals",
-          "type": "DICT",
-          "links": [
-            145
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "FUSESamplerMaskOptions"
-      },
-      "widgets_values": [
-        10,
-        0,
-        0,
-        true
-      ]
-    },
-    {
-      "id": 53,
-      "type": "FUSEKSampler",
-      "pos": [
-        3235.060546875,
-        173.59283447265625
-      ],
-      "size": [
-        270,
-        802
-      ],
-      "flags": {},
-      "order": 15,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 230
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 224
-        },
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 226
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 218
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 227
-        },
-        {
-          "name": "mask_optionals",
-          "shape": 7,
-          "type": "DICT",
-          "link": 145
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            148
-          ]
-        },
-        {
-          "name": "masks",
-          "type": "MASK",
-          "links": [
-            147
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "FUSEKSampler"
-      },
-      "widgets_values": [
-        true,
-        1500,
-        "fixed",
-        20,
-        7,
-        "dpmpp_2m",
-        "karras",
-        0.5500000000000002,
-        "yolov8l-face.pt",
-        "sam_vit_b_01ec64.pth",
-        "vit_b",
-        0,
-        1024,
-        20,
-        0.30000000000000004,
-        0.25000000000000006,
-        "box",
-        true,
-        "lab"
-      ]
-    },
-    {
       "id": 7,
       "type": "CheckpointLoaderSimple",
       "pos": [
@@ -779,7 +657,7 @@
         98
       ],
       "flags": {},
-      "order": 5,
+      "order": 4,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -835,7 +713,7 @@
         200
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -858,6 +736,179 @@
       ],
       "color": "#432",
       "bgcolor": "#653"
+    },
+    {
+      "id": 72,
+      "type": "FUSEYOLOSettings",
+      "pos": [
+        2782.15087890625,
+        1142.487060546875
+      ],
+      "size": [
+        400,
+        232
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "yolo_settings",
+          "type": "DICT",
+          "links": [
+            234
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "WASasquatch/face-upscaling-and-seamless-embedding",
+        "ver": "6add890c2204a79b1a05ccf490a293967da1e876",
+        "Node name for S&R": "FUSEYOLOSettings"
+      },
+      "widgets_values": [
+        0.25,
+        0.5,
+        300,
+        "",
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "id": 52,
+      "type": "FUSESamplerMaskOptions",
+      "pos": [
+        2914.85107421875,
+        835.3897094726562
+      ],
+      "size": [
+        270,
+        250
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "mask_optionals",
+          "type": "DICT",
+          "links": [
+            145
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "WASasquatch/face-upscaling-and-seamless-embedding",
+        "ver": "6add890c2204a79b1a05ccf490a293967da1e876",
+        "Node name for S&R": "FUSESamplerMaskOptions"
+      },
+      "widgets_values": [
+        10,
+        0,
+        0,
+        true,
+        "lanczos",
+        0.3,
+        "box",
+        true,
+        "none"
+      ]
+    },
+    {
+      "id": 53,
+      "type": "FUSEKSampler",
+      "pos": [
+        3235.060546875,
+        173.59283447265625
+      ],
+      "size": [
+        270,
+        874
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 230
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 224
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 226
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 218
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 227
+        },
+        {
+          "name": "mask_optionals",
+          "shape": 7,
+          "type": "DICT",
+          "link": 145
+        },
+        {
+          "name": "yolo_settings",
+          "shape": 7,
+          "type": "DICT",
+          "link": 234
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            148
+          ]
+        },
+        {
+          "name": "masks",
+          "type": "MASK",
+          "links": [
+            147
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "WASasquatch/face-upscaling-and-seamless-embedding",
+        "ver": "6add890c2204a79b1a05ccf490a293967da1e876",
+        "Node name for S&R": "FUSEKSampler"
+      },
+      "widgets_values": [
+        true,
+        1500,
+        "fixed",
+        20,
+        7,
+        "dpmpp_2m",
+        "karras",
+        0.5500000000000002,
+        "yolov8l-face.pt",
+        "sam_vit_b_01ec64.pth",
+        "vit_b",
+        0,
+        "linear",
+        1024,
+        20,
+        1024
+      ]
     }
   ],
   "links": [
@@ -1092,16 +1143,24 @@
       37,
       0,
       "CLIP"
+    ],
+    [
+      234,
+      72,
+      0,
+      53,
+      6,
+      "DICT"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.6303940863128502,
+      "scale": 0.6934334949441364,
       "offset": [
-        -2753.6155455513453,
-        -57.20398924468951
+        -2478.1337976828195,
+        -60.339619620350256
       ]
     },
     "frontendVersion": "1.20.5"

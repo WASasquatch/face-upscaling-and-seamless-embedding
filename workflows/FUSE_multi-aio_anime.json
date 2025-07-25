@@ -16,7 +16,7 @@
         88
       ],
       "flags": {},
-      "order": 11,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -91,37 +91,6 @@
       ]
     },
     {
-      "id": 44,
-      "type": "SaveImage",
-      "pos": [
-        3690,
-        180
-      ],
-      "size": [
-        427.7054443359375,
-        610.85986328125
-      ],
-      "flags": {},
-      "order": 20,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 262
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "SaveImage"
-      },
-      "widgets_values": [
-        "ComfyUI"
-      ]
-    },
-    {
       "id": 12,
       "type": "CLIPTextEncode",
       "pos": [
@@ -133,7 +102,7 @@
         88
       ],
       "flags": {},
-      "order": 10,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -158,213 +127,11 @@
           "links": [
             22,
             227,
-            241,
             254
           ]
         }
       ],
       "title": "Negative Prompt",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        ""
-      ]
-    },
-    {
-      "id": 49,
-      "type": "SaveImage",
-      "pos": [
-        3690,
-        840
-      ],
-      "size": [
-        210,
-        325.0968933105469
-      ],
-      "flags": {},
-      "order": 22,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 131
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "SaveImage"
-      },
-      "widgets_values": [
-        "ComfyUI"
-      ]
-    },
-    {
-      "id": 71,
-      "type": "Text Multiline",
-      "pos": [
-        857.3665161132812,
-        -132.78164672851562
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            203
-          ]
-        }
-      ],
-      "title": "Face 1 Prompt Text",
-      "properties": {
-        "cnr_id": "was-ns",
-        "ver": "3.0.0",
-        "Node name for S&R": "Text Multiline"
-      },
-      "widgets_values": [
-        "score_9, score_8_up, score_8, score_7_up, 2.5d, anime, dark skin women, black_hair, amber_eyes,\n\nunder water, detailed background, colorful, highly detailed, whites of eyes, josei style,"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 74,
-      "type": "Text Multiline",
-      "pos": [
-        858.8711547851562,
-        123.92143249511719
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            238
-          ]
-        }
-      ],
-      "title": "Face 2 Prompt Text",
-      "properties": {
-        "cnr_id": "was-ns",
-        "ver": "3.0.0",
-        "Node name for S&R": "Text Multiline"
-      },
-      "widgets_values": [
-        "score_9, score_8_up, score_8, score_7_up, anime, Caucasian girl with white_hair, blue_eyes, \n\nunder water, detailed background, colorful, highly detailed, whites of eyes, josei style,"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 37,
-      "type": "CLIPTextEncode",
-      "pos": [
-        1371.3507080078125,
-        34.382442474365234
-      ],
-      "size": [
-        210,
-        88
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 233
-        },
-        {
-          "name": "text",
-          "type": "STRING",
-          "widget": {
-            "name": "text"
-          },
-          "link": 203
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            246
-          ]
-        }
-      ],
-      "title": "Face 1 Prompt",
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "CLIPTextEncode"
-      },
-      "widgets_values": [
-        ""
-      ]
-    },
-    {
-      "id": 73,
-      "type": "CLIPTextEncode",
-      "pos": [
-        1371.435302734375,
-        164.83462524414062
-      ],
-      "size": [
-        210,
-        88
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "clip",
-          "type": "CLIP",
-          "link": 243
-        },
-        {
-          "name": "text",
-          "type": "STRING",
-          "widget": {
-            "name": "text"
-          },
-          "link": 238
-        }
-      ],
-      "outputs": [
-        {
-          "name": "CONDITIONING",
-          "type": "CONDITIONING",
-          "slot_index": 0,
-          "links": [
-            247
-          ]
-        }
-      ],
-      "title": "Face 2 Prompt",
       "properties": {
         "cnr_id": "comfy-core",
         "ver": "0.3.36",
@@ -386,7 +153,7 @@
         98
       ],
       "flags": {},
-      "order": 3,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -397,7 +164,6 @@
           "links": [
             228,
             230,
-            234,
             252
           ]
         },
@@ -408,8 +174,7 @@
           "links": [
             231,
             232,
-            233,
-            243
+            233
           ]
         },
         {
@@ -419,7 +184,6 @@
           "links": [
             2,
             224,
-            235,
             255
           ]
         }
@@ -434,170 +198,6 @@
       ]
     },
     {
-      "id": 76,
-      "type": "SaveImage",
-      "pos": [
-        3910,
-        840
-      ],
-      "size": [
-        210,
-        325.0968933105469
-      ],
-      "flags": {},
-      "order": 23,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 245
-        }
-      ],
-      "outputs": [],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "SaveImage"
-      },
-      "widgets_values": [
-        "ComfyUI"
-      ]
-    },
-    {
-      "id": 70,
-      "type": "Text Multiline",
-      "pos": [
-        860,
-        650
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 4,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            205
-          ]
-        }
-      ],
-      "title": "Negative Prompt Text",
-      "properties": {
-        "cnr_id": "was-ns",
-        "ver": "3.0.0",
-        "Node name for S&R": "Text Multiline"
-      },
-      "widgets_values": [
-        "(worst quality:1.4), (low quality:1.4), (blurry:1.4), extra digits:1.4, simple background, cleavage"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 69,
-      "type": "Text Multiline",
-      "pos": [
-        860,
-        390
-      ],
-      "size": [
-        400,
-        200
-      ],
-      "flags": {},
-      "order": 5,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "STRING",
-          "type": "STRING",
-          "links": [
-            206
-          ]
-        }
-      ],
-      "title": "Positive Prompt Text",
-      "properties": {
-        "cnr_id": "was-ns",
-        "ver": "3.0.0",
-        "Node name for S&R": "Text Multiline"
-      },
-      "widgets_values": [
-        "score_9, score_8_up, score_8, score_7_up, 2.5d, anime, 2girl, two girls underwater, Caucasian girl with white_hair and dark skin women black_hair, under water, detailed background, hair, colorful,\n\nhighly detailed, whites of eyes, josei style,"
-      ],
-      "color": "#432",
-      "bgcolor": "#653"
-    },
-    {
-      "id": 11,
-      "type": "KSampler",
-      "pos": [
-        1656.5552978515625,
-        157.9754638671875
-      ],
-      "size": [
-        315,
-        474.0000305175781
-      ],
-      "flags": {},
-      "order": 12,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 228
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 21
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 22
-        },
-        {
-          "name": "latent_image",
-          "type": "LATENT",
-          "link": 23
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "slot_index": 0,
-          "links": [
-            1
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.3.36",
-        "Node name for S&R": "KSampler"
-      },
-      "widgets_values": [
-        428201845624309,
-        "fixed",
-        20,
-        7,
-        "dpmpp_2m",
-        "karras",
-        1
-      ]
-    },
-    {
       "id": 1,
       "type": "VAEDecode",
       "pos": [
@@ -609,7 +209,7 @@
         46
       ],
       "flags": {},
-      "order": 13,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
@@ -652,7 +252,7 @@
         178
       ],
       "flags": {},
-      "order": 14,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
@@ -696,7 +296,7 @@
         610.85986328125
       ],
       "flags": {},
-      "order": 16,
+      "order": 14,
       "mode": 0,
       "inputs": [
         {
@@ -716,43 +316,6 @@
       ]
     },
     {
-      "id": 75,
-      "type": "Convert Masks to Images",
-      "pos": [
-        3440.742919921875,
-        1108.3468017578125
-      ],
-      "size": [
-        198.69410705566406,
-        26
-      ],
-      "flags": {},
-      "order": 21,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "masks",
-          "type": "MASK",
-          "link": 244
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGES",
-          "type": "IMAGE",
-          "links": [
-            245
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "was-ns",
-        "ver": "3.0.0",
-        "Node name for S&R": "Convert Masks to Images"
-      },
-      "widgets_values": []
-    },
-    {
       "id": 48,
       "type": "Convert Masks to Images",
       "pos": [
@@ -764,7 +327,7 @@
         26
       ],
       "flags": {},
-      "order": 19,
+      "order": 17,
       "mode": 0,
       "inputs": [
         {
@@ -790,6 +353,250 @@
       "widgets_values": []
     },
     {
+      "id": 37,
+      "type": "CLIPTextEncode",
+      "pos": [
+        1369.7161865234375,
+        164.31556701660156
+      ],
+      "size": [
+        210,
+        88
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 233
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 203
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            246
+          ]
+        }
+      ],
+      "title": "Face 1 Prompt",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.36",
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ]
+    },
+    {
+      "id": 44,
+      "type": "SaveImage",
+      "pos": [
+        3387.9189453125,
+        162.56588745117188
+      ],
+      "size": [
+        427.7054443359375,
+        610.85986328125
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 263
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.36",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 49,
+      "type": "SaveImage",
+      "pos": [
+        3393.947509765625,
+        816.804931640625
+      ],
+      "size": [
+        417.6479187011719,
+        325.9957580566406
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 131
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.36",
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 70,
+      "type": "Text Multiline",
+      "pos": [
+        860,
+        650
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            205
+          ]
+        }
+      ],
+      "title": "Negative Prompt Text",
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "3.0.0",
+        "Node name for S&R": "Text Multiline"
+      },
+      "widgets_values": [
+        "(worst quality:1.4), (low quality:1.4), (blurry:1.4), extra digits:1.4, simple background, cleavage, large_breasts, huge_breasts, medium_breasts"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 11,
+      "type": "KSampler",
+      "pos": [
+        1660.76025390625,
+        157.5368194580078
+      ],
+      "size": [
+        315,
+        474.0000305175781
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 228
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 21
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 22
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 23
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 0,
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.36",
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        428201845624310,
+        "fixed",
+        20,
+        7,
+        "dpmpp_2m",
+        "karras",
+        1
+      ]
+    },
+    {
+      "id": 69,
+      "type": "Text Multiline",
+      "pos": [
+        860,
+        390
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            206
+          ]
+        }
+      ],
+      "title": "Positive Prompt Text",
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "3.0.0",
+        "Node name for S&R": "Text Multiline"
+      },
+      "widgets_values": [
+        "score_9, score_8_up, score_8, score_7_up, 2.5d, anime, 2girl, two girls underwater, Caucasian girl with white_hair and dark skin women black_hair, facing front\n\nunder water, detailed background, hair, colorful,\n\nhighly detailed, whites of eyes, josei style,"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
       "id": 77,
       "type": "UltimateSDUpscaleNoUpscale",
       "pos": [
@@ -801,7 +608,7 @@
         782
       ],
       "flags": {},
-      "order": 15,
+      "order": 13,
       "mode": 0,
       "inputs": [
         {
@@ -849,7 +656,7 @@
         31659771842079,
         "fixed",
         20,
-        8,
+        6,
         "dpmpp_2m",
         "karras",
         0.2,
@@ -868,18 +675,54 @@
       ]
     },
     {
+      "id": 71,
+      "type": "Text Multiline",
+      "pos": [
+        861.4525146484375,
+        124.6330795288086
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            203
+          ]
+        }
+      ],
+      "title": "Face 1 Prompt Text",
+      "properties": {
+        "cnr_id": "was-ns",
+        "ver": "3.0.0",
+        "Node name for S&R": "Text Multiline"
+      },
+      "widgets_values": [
+        "score_9, score_8_up, score_8, score_7_up, 2.5d, anime, 1girl, detailed, crisp, detailed eyes, solemn expression,\n\nunder water, detailed background, colorful, highly detailed, whites of eyes, josei style,"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
       "id": 79,
       "type": "FUSEYOLOSettings",
       "pos": [
-        2619.475830078125,
-        1151.044189453125
+        2617.79638671875,
+        1153.782958984375
       ],
       "size": [
         400,
         232
       ],
       "flags": {},
-      "order": 6,
+      "order": 5,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -887,7 +730,6 @@
           "name": "yolo_settings",
           "type": "DICT",
           "links": [
-            263,
             264
           ]
         }
@@ -899,7 +741,7 @@
       },
       "widgets_values": [
         0.25,
-        0.5000000000000001,
+        0.5,
         300,
         "",
         false,
@@ -911,15 +753,15 @@
       "id": 53,
       "type": "FUSEKSampler",
       "pos": [
-        3078.0078125,
-        177.8332061767578
+        3077.085205078125,
+        163.0721893310547
       ],
       "size": [
         270,
         874
       ],
       "flags": {},
-      "order": 17,
+      "order": 15,
       "mode": 0,
       "inputs": [
         {
@@ -957,7 +799,7 @@
           "name": "yolo_settings",
           "shape": 7,
           "type": "DICT",
-          "link": 263
+          "link": 264
         }
       ],
       "outputs": [
@@ -965,7 +807,7 @@
           "name": "images",
           "type": "IMAGE",
           "links": [
-            236
+            263
           ]
         },
         {
@@ -983,114 +825,21 @@
       },
       "widgets_values": [
         true,
-        44,
+        45,
         "fixed",
         20,
         11,
         "dpmpp_2m",
         "karras",
-        0.6000000000000001,
+        0.5500000000000002,
         "yolov8x6_animeface.pt",
         "sam_vit_b_01ec64.pth",
         "vit_b",
-        0,
+        -1,
         "linear",
         1024,
         20,
-        1024
-      ]
-    },
-    {
-      "id": 72,
-      "type": "FUSEKSampler",
-      "pos": [
-        3372.74072265625,
-        180.04412841796875
-      ],
-      "size": [
-        270,
-        874
-      ],
-      "flags": {},
-      "order": 18,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 234
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 235
-        },
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "link": 236
-        },
-        {
-          "name": "positive",
-          "type": "CONDITIONING",
-          "link": 247
-        },
-        {
-          "name": "negative",
-          "type": "CONDITIONING",
-          "link": 241
-        },
-        {
-          "name": "mask_optionals",
-          "shape": 7,
-          "type": "DICT",
-          "link": 248
-        },
-        {
-          "name": "yolo_settings",
-          "shape": 7,
-          "type": "DICT",
-          "link": 264
-        }
-      ],
-      "outputs": [
-        {
-          "name": "images",
-          "type": "IMAGE",
-          "links": [
-            262
-          ]
-        },
-        {
-          "name": "masks",
-          "type": "MASK",
-          "links": [
-            244
-          ]
-        }
-      ],
-      "properties": {
-        "aux_id": "WASasquatch/face-upscaling-and-seamless-embedding",
-        "ver": "23751c55a289b357c34fe1e758d7cc5ab3cd93f6",
-        "Node name for S&R": "FUSEKSampler"
-      },
-      "widgets_values": [
-        true,
-        44,
-        "fixed",
-        20,
-        11,
-        "dpmpp_2m",
-        "karras",
-        0.6000000000000001,
-        "yolov8x6_animeface.pt",
-        "sam_vit_b_01ec64.pth",
-        "vit_b",
-        1,
-        "linear",
-        1024,
-        20,
-        1024
+        true
       ]
     },
     {
@@ -1105,7 +854,7 @@
         250
       ],
       "flags": {},
-      "order": 7,
+      "order": 6,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -1113,7 +862,6 @@
           "name": "mask_optionals",
           "type": "DICT",
           "links": [
-            248,
             249
           ]
         }
@@ -1124,7 +872,7 @@
         "Node name for S&R": "FUSESamplerMaskOptions"
       },
       "widgets_values": [
-        25,
+        10,
         0,
         10.000000000000002,
         true,
@@ -1274,92 +1022,12 @@
       "CLIP"
     ],
     [
-      234,
-      7,
-      0,
-      72,
-      0,
-      "MODEL"
-    ],
-    [
-      235,
-      7,
-      2,
-      72,
-      1,
-      "VAE"
-    ],
-    [
-      236,
-      53,
-      0,
-      72,
-      2,
-      "IMAGE"
-    ],
-    [
-      238,
-      74,
-      0,
-      73,
-      1,
-      "STRING"
-    ],
-    [
-      241,
-      12,
-      0,
-      72,
-      4,
-      "CONDITIONING"
-    ],
-    [
-      243,
-      7,
-      1,
-      73,
-      0,
-      "CLIP"
-    ],
-    [
-      244,
-      72,
-      1,
-      75,
-      0,
-      "MASK"
-    ],
-    [
-      245,
-      75,
-      0,
-      76,
-      0,
-      "IMAGE"
-    ],
-    [
       246,
       37,
       0,
       53,
       3,
       "CONDITIONING"
-    ],
-    [
-      247,
-      73,
-      0,
-      72,
-      3,
-      "CONDITIONING"
-    ],
-    [
-      248,
-      52,
-      0,
-      72,
-      5,
-      "DICT"
     ],
     [
       249,
@@ -1434,26 +1102,18 @@
       "IMAGE"
     ],
     [
-      262,
-      72,
+      263,
+      53,
       0,
       44,
       0,
       "IMAGE"
     ],
     [
-      263,
-      79,
-      0,
-      53,
-      6,
-      "DICT"
-    ],
-    [
       264,
       79,
       0,
-      72,
+      53,
       6,
       "DICT"
     ]
@@ -1462,10 +1122,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5209868481924527,
+      "scale": 0.5730855330117148,
       "offset": [
-        -2188.2207180864507,
-        -92.73930795537524
+        -1962.4501438497769,
+        -89.39607775427743
       ]
     },
     "frontendVersion": "1.20.5"
