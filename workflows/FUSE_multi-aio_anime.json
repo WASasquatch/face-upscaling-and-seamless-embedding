@@ -727,7 +727,7 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "yolo_settings",
+          "name": "yolo_optionals",
           "type": "DICT",
           "links": [
             264
@@ -794,6 +794,12 @@
           "shape": 7,
           "type": "DICT",
           "link": 249
+        },
+        {
+          "name": "yolo_optionals",
+          "shape": 7,
+          "type": "DICT",
+          "link": null
         },
         {
           "name": "yolo_settings",
@@ -1114,7 +1120,7 @@
       79,
       0,
       53,
-      6,
+      7,
       "DICT"
     ]
   ],
@@ -1122,10 +1128,10 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5730855330117148,
+      "scale": 1.4864362802415263,
       "offset": [
-        -1962.4501438497769,
-        -89.39607775427743
+        -2412.1433949298603,
+        -922.7958561822022
       ]
     },
     "frontendVersion": "1.20.5"

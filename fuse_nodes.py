@@ -53,7 +53,7 @@ class FUSEKSampler(FUSEBase):
             },
             "optional": {
                 "mask_optionals": ("DICT", {"tooltip": "Optional masking and blending settings from FUSESamplerMaskOptions node."}),
-                "yolo_settings": ("DICT", {"tooltip": "Optional YOLO detection settings from FUSEYOLOSettings node."}),
+                "yolo_optionals": ("DICT", {"tooltip": "Optional YOLO detection settings from FUSEYOLOSettings node."}),
             },
             "hidden": {
                 "unique_id": "UNIQUE_ID",
@@ -313,7 +313,7 @@ class FUSEGenericKSampler(FUSEBase):
             },
             "optional": {
                 "mask_optionals": ("DICT", {"tooltip": "Optional masking and blending settings from FUSESamplerMaskOptions node."}),
-                "yolo_settings": ("DICT", {"tooltip": "Optional YOLO detection settings from FUSEYOLOSettings node."}),
+                "yolo_optionals": ("DICT", {"tooltip": "Optional YOLO detection settings from FUSEYOLOSettings node."}),
             },
             "hidden": {
                 "unique_id": "UNIQUE_ID",
@@ -598,7 +598,7 @@ class FUSEYOLOSettings:
         }
     
     RETURN_TYPES = ("DICT",)
-    RETURN_NAMES = ("yolo_settings",)
+    RETURN_NAMES = ("yolo_optionals",)
     FUNCTION = "execute"
     CATEGORY = "Face Enhancement"
     
@@ -630,5 +630,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "FUSEKSampler": "FUSE KSampler",
     "FUSEGenericKSampler": "FUSE KSampler (Generic)",
     "FUSESamplerMaskOptions": "FUSE Mask Optionals",
-    "FUSEYOLOSettings": "FUSE YOLO Settings"
+    "FUSEYOLOSettings": "FUSE YOLO Optionals"
 }

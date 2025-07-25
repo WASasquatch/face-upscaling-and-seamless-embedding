@@ -884,7 +884,7 @@
       "inputs": [],
       "outputs": [
         {
-          "name": "yolo_settings",
+          "name": "yolo_optionals",
           "type": "DICT",
           "links": [
             263,
@@ -952,6 +952,12 @@
           "shape": 7,
           "type": "DICT",
           "link": 249
+        },
+        {
+          "name": "yolo_optionals",
+          "shape": 7,
+          "type": "DICT",
+          "link": null
         },
         {
           "name": "yolo_settings",
@@ -1045,6 +1051,12 @@
           "shape": 7,
           "type": "DICT",
           "link": 248
+        },
+        {
+          "name": "yolo_optionals",
+          "shape": 7,
+          "type": "DICT",
+          "link": null
         },
         {
           "name": "yolo_settings",
@@ -1446,7 +1458,7 @@
       79,
       0,
       53,
-      6,
+      7,
       "DICT"
     ],
     [
@@ -1454,7 +1466,7 @@
       79,
       0,
       72,
-      6,
+      7,
       "DICT"
     ]
   ],
