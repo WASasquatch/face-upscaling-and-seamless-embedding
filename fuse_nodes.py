@@ -71,7 +71,7 @@ class FUSEKSampler(FUSEBase):
         positive, negative, use_cache, seed, steps, cfg, sampler_name, scheduler, denoise,
         yolo_detector, sam_segmenter, sam_model_type, face_id, face_size, face_padding,
         force_square, face_order, unique_id,
-        mask_optionals=None, yolo_settings=None
+        mask_optionals=None, yolo_optionals=None
     ):
         device = comfy.model_management.get_torch_device()
         opts = mask_optionals or {}
@@ -86,7 +86,7 @@ class FUSEKSampler(FUSEBase):
         face_color_transfer = opts.get('color_transfer', 'none')
 
         self._load_yolo_model(yolo_detector, device, is_face_model=True)
-        self._apply_yolo_settings(yolo_settings)
+        self._apply_yolo_settings(yolo_optionals)
 
         if use_sam_mask:
             self._load_sam_model(sam_segmenter, sam_model_type, device)
@@ -331,7 +331,7 @@ class FUSEGenericKSampler(FUSEBase):
         positive, negative, use_cache, seed, steps, cfg, sampler_name, scheduler, denoise,
         yolo_detector, sam_segmenter, sam_model_type, mask_id, mask_order, mask_size, mask_padding,
         force_square, unique_id,
-        mask_optionals=None, yolo_settings=None
+        mask_optionals=None, yolo_optionals=None
     ):
         device = comfy.model_management.get_torch_device()
         opts = mask_optionals or {}
@@ -346,7 +346,7 @@ class FUSEGenericKSampler(FUSEBase):
         mask_color_transfer = opts.get('color_transfer', 'none')
 
         self._load_yolo_model(yolo_detector, device)
-        self._apply_yolo_settings(yolo_settings)
+        self._apply_yolo_settings(yolo_optionals)
 
         if use_sam_mask:
             self._load_sam_model(sam_segmenter, sam_model_type, device)
@@ -432,7 +432,6 @@ class FUSEGenericKSampler(FUSEBase):
                     'mask_full': None,
                 })
 
-            # Cache crops after all processing is complete
             if use_cache and crops:
                 node_cache[crops_cache_key] = {
                     'crops': crops,
