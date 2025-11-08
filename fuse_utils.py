@@ -124,6 +124,18 @@ def load_yolo_models_list():
            and os.path.isfile(os.path.join(yolo_models_path, fname))
     ])
 
+def load_all_yolo_models_list():
+    face_models = load_yolo_face_models_list()
+    regular_models = load_yolo_models_list()
+    
+    combined = []
+    if face_models:
+        combined.extend([f"face/{m}" for m in face_models])
+    if regular_models:
+        combined.extend([f"yolo/{m}" for m in regular_models])
+    
+    return combined if combined else ["No models found"]
+
 def load_sam_models_list():
     if not os.path.isdir(sam_models_path):
         return []
@@ -240,6 +252,199 @@ def apply_edge_blending(mask_arr, blend_amount, near_white_threshold=0.001):
     return np.clip(modified_mask, 0, 1)
 
 
+def compute_iou(box1, box2):
+    """
+    Compute Intersection over Union (IoU) between two bounding boxes.
+    Args:
+        box1, box2: [x1, y1, x2, y2] format
+    Returns:
+        IoU score (0-1)
+    """
+    x1_inter = max(box1[0], box2[0])
+    y1_inter = max(box1[1], box2[1])
+    x2_inter = min(box1[2], box2[2])
+    y2_inter = min(box1[3], box2[3])
+    
+    if x2_inter <= x1_inter or y2_inter <= y1_inter:
+        return 0.0
+    
+    inter_area = (x2_inter - x1_inter) * (y2_inter - y1_inter)
+    box1_area = (box1[2] - box1[0]) * (box1[3] - box1[1])
+    box2_area = (box2[2] - box2[0]) * (box2[3] - box2[1])
+    union_area = box1_area + box2_area - inter_area
+    
+    return inter_area / union_area if union_area > 0 else 0.0
+
+
+def compute_box_distance(box1, box2):
+    """
+    Compute center distance between two bounding boxes.
+    Args:
+        box1, box2: [x1, y1, x2, y2] format
+    Returns:
+        Euclidean distance between centers
+    """
+    cx1 = (box1[0] + box1[2]) / 2.0
+    cy1 = (box1[1] + box1[3]) / 2.0
+    cx2 = (box2[0] + box2[2]) / 2.0
+    cy2 = (box2[1] + box2[3]) / 2.0
+    return np.sqrt((cx1 - cx2)**2 + (cy1 - cy2)**2)
+
+
+def match_faces_across_frames(prev_boxes, curr_boxes, iou_threshold=0.3, distance_threshold=100.0):
+    """
+    Match faces between consecutive frames using IoU and spatial proximity.
+    Args:
+        prev_boxes: List of boxes from previous frame [[x1,y1,x2,y2], ...]
+        curr_boxes: List of boxes from current frame
+        iou_threshold: Minimum IoU to consider a match
+        distance_threshold: Maximum center distance to consider a match
+    Returns:
+        List of tuples (prev_idx, curr_idx) representing matches
+    """
+    if not prev_boxes or not curr_boxes:
+        return []
+    
+    matches = []
+    used_curr = set()
+    
+    # For each previous box, find best match in current frame
+    for prev_idx, prev_box in enumerate(prev_boxes):
+        best_score = -1
+        best_curr_idx = -1
+        
+        for curr_idx, curr_box in enumerate(curr_boxes):
+            if curr_idx in used_curr:
+                continue
+            
+            iou = compute_iou(prev_box, curr_box)
+            distance = compute_box_distance(prev_box, curr_box)
+            
+            # Combined score: prioritize IoU, use distance as tiebreaker
+            if iou >= iou_threshold:
+                score = iou + (1.0 / (1.0 + distance / 100.0))  # Normalize distance
+                if score > best_score:
+                    best_score = score
+                    best_curr_idx = curr_idx
+            elif distance <= distance_threshold:
+                # Fallback to distance-based matching if IoU is low
+                score = 1.0 / (1.0 + distance / 100.0)
+                if score > best_score:
+                    best_score = score
+                    best_curr_idx = curr_idx
+        
+        if best_curr_idx >= 0:
+            matches.append((prev_idx, best_curr_idx))
+            used_curr.add(best_curr_idx)
+    
+    return matches
+
+
+def track_faces_in_video(all_frame_boxes, iou_threshold=0.3, distance_threshold=100.0):
+    """
+    Track faces across all video frames, assigning consistent IDs.
+    Args:
+        all_frame_boxes: List of frame detections, each frame is list of boxes [[x1,y1,x2,y2],...]
+        iou_threshold: IoU threshold for matching
+        distance_threshold: Distance threshold for matching
+    Returns:
+        List of tracks, where each track is a dict:
+        {
+            'track_id': int,
+            'frames': [frame_idx, ...],
+            'boxes': [box, ...],  # One box per frame
+        }
+    """
+    if not all_frame_boxes:
+        return []
+    
+    tracks = []
+    next_track_id = 0
+    
+    # Initialize tracks from first frame
+    for box in all_frame_boxes[0]:
+        tracks.append({
+            'track_id': next_track_id,
+            'frames': [0],
+            'boxes': [box],
+            'active': True
+        })
+        next_track_id += 1
+    
+    # Process subsequent frames
+    for frame_idx in range(1, len(all_frame_boxes)):
+        curr_boxes = all_frame_boxes[frame_idx]
+        
+        # Get active tracks from previous frame
+        active_tracks = [t for t in tracks if t['active']]
+        prev_boxes = [t['boxes'][-1] for t in active_tracks]
+        
+        # Match current detections to previous tracks
+        matches = match_faces_across_frames(prev_boxes, curr_boxes, iou_threshold, distance_threshold)
+        
+        matched_curr = set()
+        for prev_idx, curr_idx in matches:
+            track = active_tracks[prev_idx]
+            track['frames'].append(frame_idx)
+            track['boxes'].append(curr_boxes[curr_idx])
+            matched_curr.add(curr_idx)
+        
+        # Mark unmatched tracks as inactive
+        for prev_idx, track in enumerate(active_tracks):
+            if not any(m[0] == prev_idx for m in matches):
+                track['active'] = False
+        
+        # Create new tracks for unmatched detections
+        for curr_idx, box in enumerate(curr_boxes):
+            if curr_idx not in matched_curr:
+                tracks.append({
+                    'track_id': next_track_id,
+                    'frames': [frame_idx],
+                    'boxes': [box],
+                    'active': True
+                })
+                next_track_id += 1
+    
+    # Clean up active flags
+    for track in tracks:
+        del track['active']
+    
+    return tracks
+
+
+def smooth_boxes_temporal(boxes, window_size=3):
+    """
+    Apply temporal smoothing to bounding boxes using moving average.
+    Args:
+        boxes: List of boxes [x1, y1, x2, y2] across frames
+        window_size: Size of smoothing window (must be odd)
+    Returns:
+        Smoothed boxes
+    """
+    if len(boxes) <= 1 or window_size <= 1:
+        return boxes
+    
+    window_size = window_size if window_size % 2 == 1 else window_size + 1
+    half_window = window_size // 2
+    
+    smoothed = []
+    for i in range(len(boxes)):
+        start_idx = max(0, i - half_window)
+        end_idx = min(len(boxes), i + half_window + 1)
+        window_boxes = boxes[start_idx:end_idx]
+        
+        # Average coordinates
+        avg_box = [
+            sum(b[0] for b in window_boxes) / len(window_boxes),
+            sum(b[1] for b in window_boxes) / len(window_boxes),
+            sum(b[2] for b in window_boxes) / len(window_boxes),
+            sum(b[3] for b in window_boxes) / len(window_boxes),
+        ]
+        smoothed.append(avg_box)
+    
+    return smoothed
+
+
 class FUSEBase:
     def __init__(self):
         self.cache = {}
@@ -260,7 +465,17 @@ class FUSEBase:
                 del self.yolo_model
                 gc.collect()
 
-            model_path = os.path.join(yolo_face_models_path if is_face_model else yolo_models_path, model_name)
+            # Handle prefixed model names (face/ or yolo/)
+            if model_name.startswith("face/"):
+                actual_model_name = model_name[5:]  # Remove "face/" prefix
+                model_path = os.path.join(yolo_face_models_path, actual_model_name)
+            elif model_name.startswith("yolo/"):
+                actual_model_name = model_name[5:]  # Remove "yolo/" prefix
+                model_path = os.path.join(yolo_models_path, actual_model_name)
+            else:
+                # Fallback to old behavior for backward compatibility
+                model_path = os.path.join(yolo_face_models_path if is_face_model else yolo_models_path, model_name)
+            
             self.yolo_model = YOLO(model_path)
             self.current_yolo_model_name = model_name
 

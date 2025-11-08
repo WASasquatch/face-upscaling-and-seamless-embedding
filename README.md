@@ -111,6 +111,64 @@ Additional mask processing options for the FUSEKSampler.
 | mask_fill_holes | Fill holes in the mask | BOOL | True | True/False |
 | blend_sampling | Resampling method for resizing operations (face/mask crop and paste back) | STRING | "bilinear" | "bilinear", "lanczos", "nearest", "bicubic", "box", "hamming" |
 
+### FUSEKSampler (Video)
+
+Video-aware face enhancement sampler with temporal tracking capabilities. This node processes video inputs (5D tensors) or image batches (4D tensors) and maintains face consistency across frames through intelligent tracking. Each unique person is processed as their own video batch, enabling true temporal coherence.
+
+**Key Features:**
+- Temporal face tracking across frames with IoU-based matching
+- Per-person video batch processing
+- Temporal smoothing of bounding boxes for stable crops
+- Support for both face-specific and general YOLO models
+
+**Use Cases:**
+- Video face enhancement with temporal consistency
+- General object enhancement with temporal consistency
+- Multi-person video processing with individual tracking
+
+| Parameter | Description | Type | Default | Value Range |
+|-----------|-------------|------|---------|-------------|
+| model | Base model for sampling (should support video if input is 5D) | MODEL | Required | N/A |
+| vae | VAE model for the sampler (should support video if input is 5D) | VAE | Required | N/A |
+| images | Input image batch (4D) or video (5D) for face detection and upscaling | IMAGE | Required | N/A |
+| positive | Positive conditioning for the sampler | CONDITIONING | Required | N/A |
+| negative | Negative conditioning for the sampler | CONDITIONING | Required | N/A |
+| use_cache | Use internal caching to speed up workflow iteration | BOOLEAN | True | True/False |
+| seed | Seed for deterministic results | INT | 0 | ≥ 0 |
+| steps | Number of steps for the sampler | INT | 20 | ≥ 1 |
+| cfg | Classifier-Free Guidance scale | FLOAT | 8.0 | Any float value |
+| sampler_name | Name of the sampler | STRING | (from KSampler) | Available KSampler options |
+| scheduler | Scheduler type | STRING | (from KSampler) | Available KSampler schedulers |
+| denoise | Denoising strength for the sampler | FLOAT | 0.5 | 0.0 - 1.0 |
+| yolo_detector | YOLO model for face detection (face/ or yolo/ prefixed) | STRING | Required | Available YOLO models |
+| sam_segmenter | SAM model for face segmentation | STRING | Required | Available SAM models |
+| sam_model_type | SAM model type | STRING | "vit_b" | "vit_b", "vit_l", "vit_h" |
+| face_id | Index of the face to process (-1 for all faces) | INT | 0 | ≥ -1 |
+| face_order | Order to process detected faces | STRING | "linear" | "linear", "linear_reverse", "largest_bbox", "smallest_bbox" |
+| face_size | Resolution to sample the face crop at | INT | 512 | 512, 768, 1024, 1280, 1536 |
+| face_padding | Padding in pixels around face crop | INT | 20 | 0 - `nodes.MAX_RESOLUTION` (Currently 16384) |
+| force_square | Force 1:1 square face crops | BOOLEAN | True | True/False |
+| temporal_tracking | Enable temporal face tracking for video inputs | BOOLEAN | True | True/False |
+| mask_optionals | Optional masking and blending settings | DICT | Optional | From FUSESamplerMaskOptions |
+| yolo_optionals | Optional YOLO detection and tracking settings | DICT | Optional | From FUSEYOLOSettings |
+
+### FUSEYOLOSettings
+
+Optional YOLO detection and temporal tracking settings for video processing.
+
+| Parameter | Description | Type | Default | Value Range |
+|-----------|-------------|------|---------|-------------|
+| confidence | YOLO confidence threshold | FLOAT | 0.25 | 0.0 - 1.0 |
+| iou_threshold | YOLO NMS IoU threshold | FLOAT | 0.5 | 0.0 - 1.0 |
+| max_detections | Maximum number of detections to keep | INT | 300 | 1 - 1000 |
+| class_filter | Comma or newline separated class names to filter | STRING | "" | Any string |
+| agnostic_nms | Class-agnostic NMS | BOOLEAN | False | True/False |
+| half_precision | Use FP16 for faster inference | BOOLEAN | False | True/False |
+| augment | Test Time Augmentation for improved accuracy | BOOLEAN | False | True/False |
+| tracking_iou_threshold | IoU threshold for face tracking across frames | FLOAT | 0.3 | 0.0 - 1.0 |
+| tracking_smooth_boxes | Apply temporal smoothing to bounding boxes | BOOLEAN | True | True/False |
+| tracking_smooth_window | Temporal smoothing window size (must be odd) | INT | 3 | 1 - 11 |
+
 ### FUSEKSampler (Generic)
 
 A generic version of the FUSEKSampler designed for use with any YOLO detection model, not just face-specific ones. This node provides the same sampling capabilities as the original FUSEKSampler but with more generic parameter naming to avoid confusion when working with non-face detection models.
